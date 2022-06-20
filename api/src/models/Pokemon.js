@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define("pokemon", {
     id: {
       type: DataTypes.UUID,
-      // default value,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey:true,
     },
@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    stats: {
+    life: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
@@ -37,6 +37,11 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    createdInDb:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull:false,
     },
   });
 };
