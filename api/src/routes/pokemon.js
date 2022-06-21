@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { getAllApiPokes, pokeApiTemplate} = require('../Controllers/pokemon')
+const { getAllApiPokes} = require('../Controllers/pokemon')
 
 
 
