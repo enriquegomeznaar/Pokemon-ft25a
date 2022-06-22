@@ -56,6 +56,7 @@ async function getAllPokemons() {
 }
 // getAllPokemons()
 
+// 3. Get pokemon por nombre
 async function getPokemonByName(req, res, next) {
   const name = req.query.name;
   const pokemonsTotal = await getAllPokemons();
@@ -72,15 +73,29 @@ async function getPokemonByName(req, res, next) {
   // console.log(name)
 }
 
+// 5.Obtener todos los tipos de pokemons posibles
+async function getAllToBD(){
+  try {
+    let types = (await axios.get("https://pokeapi.co/api/v2/type")).data.results.map(p=>({
+      name: p.name
+    }))
+    await Types.bulkCreate(types)
+    console.log("Tipos cargados en BD correctamente")
+  } catch (error) {
+      console.log(error)
+  }
+}
+
 // 2. Get pokemon por id ( .Los campos mostrados en la ruta principal para cada pokemon (imagen, nombre y tipos)
 //                      .Número de Pokemon (id)
 //                      .Estadísticas (vida, ataque, defensa, velocidad)
 //                      .Altura y peso)
-// 3. Get pokemon por nombre
+
 // 4. Post pokemon
 
 // module.exports de las funciones creadas
 module.exports = {
   getAllPokemons,
   getPokemonByName,
+  getAllToBD,
 };
