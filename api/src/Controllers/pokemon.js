@@ -3,7 +3,9 @@ const { Pokemon, Types } = require("../db");
 const API_URL_POKES = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10";
 const { Router } = require("express");
 const router = Router();
+
 // 1. Get pokemon (imagen, nombre, tipo)
+
 async function getAllApi() {
   const getApiInfo = await axios.get(`${API_URL_POKES}`);
   //console.log(getApiInfo)
@@ -33,6 +35,7 @@ async function getAllApi() {
   return pokesDetail;
 }
 
+
 async function getAllDB() {
   return await Pokemon.findAll({
     include: {
@@ -51,12 +54,13 @@ async function getAllPokemons() {
   return apiDB;
   //console.log(apiDB)
 }
+// getAllPokemons()
 
 async function getPokemonByName(req, res, next) {
   const name = req.query.name;
   const pokemonsTotal = await getAllPokemons();
   if (name) {
-    let pokemonsName = await pokemonsTotal.filter((el) =>
+    var pokemonsName = await pokemonsTotal.filter((el) =>
       el.name.toLowerCase().includes(name.toLowerCase())
     );
     pokemonsName.length
@@ -65,6 +69,7 @@ async function getPokemonByName(req, res, next) {
   } else{
     res.status(200).send(pokemonsTotal)
   }
+  // console.log(name)
 }
 
 // 2. Get pokemon por id ( .Los campos mostrados en la ruta principal para cada pokemon (imagen, nombre y tipos)

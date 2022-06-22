@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const axios = require("axios");
 const { getAllPokemons, getPokemonByName } = require("../Controllers/pokemon");
 
 const router = Router();
