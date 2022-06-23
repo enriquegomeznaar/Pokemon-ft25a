@@ -6,4 +6,5 @@ const router = Router();
 router.get("/", getAllPokemons);
 router.get("/name", getPokemonByName);
 
+
 module.exports = router;
