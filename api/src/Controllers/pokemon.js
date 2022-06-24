@@ -40,7 +40,7 @@ async function getAllDB() {
   return await Pokemon.findAll({
     include: {
       model: Types,
-      attributes: ["type"],
+      attributes: ["name"],
       through: {
         attributes: [],
       },
@@ -57,9 +57,11 @@ async function getAllPokemons() {
 
 //  Get pokemon por nombre (query).
 
-async function getPokemonByName(req, res, next) {
+async function getPokemonByName(req, res) {
   const name = req.query.name;
+  
   const pokemonsTotal = await getAllPokemons();
+  // console.log(pokemonsTotal)
   if (name) {
     var pokemonsName = await pokemonsTotal.filter((el) =>
       el.name.toLowerCase().includes(name.toLowerCase())
@@ -70,7 +72,6 @@ async function getPokemonByName(req, res, next) {
   } else {
     res.status(200).send(pokemonsTotal);
   }
-  // console.log(name)
 }
 
 // Crear un pokemon.
@@ -81,30 +82,32 @@ async function postPokemon(req, res, next) {
 
     let pokemonCreated = await Pokemon.create ({
       id: uuidv4(),
-      name:name,
-      ph:ph,
-      strength:strength,
-      defense:defense,
-      speed:speed,
-      height:height,
-      weight:weight,
-      image:image,
-      createdInDb:createdInDb
+      name,
+      ph,
+      strength,
+      defense,
+      speed,
+      height,  
+      weight,
+      image,
+      createdInDb
     });
-    // console.log(pokemonCreated)
+     
     const typeBD = await Types.findAll({
-      where: { name: type },
+      where: { name: name },
     });
     pokemonCreated.addType(typeBD);
-    res.send("Pokemon creado con exito!");
-  }
+    res.send(pokemonCreated);
+
+   }
+
 
 // 2. Get pokemon por id ( .Los campos mostrados en la ruta principal para cada pokemon (imagen, nombre y tipos)
 //                      .Número de Pokemon (id)
 //                      .Estadísticas (vida, ataque, defensa, velocidad)
 //                      .Altura y peso)
 
-// 4. Post pokemon
+
 
 // module.exports de las funciones creadas
 module.exports = {

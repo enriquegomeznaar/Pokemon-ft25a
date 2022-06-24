@@ -14,20 +14,20 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    life: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+    ph: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     strength: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     defense: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     speed: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     height: {

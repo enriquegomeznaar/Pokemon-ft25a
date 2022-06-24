@@ -8,7 +8,7 @@ const {
 const router = Router();
 
 router.get("/", getAllPokemons);
-router.get("/name", getPokemonByName);
+router.get("/search", getPokemonByName);
 router.post("/", postPokemon);
 
 module.exports = router;
