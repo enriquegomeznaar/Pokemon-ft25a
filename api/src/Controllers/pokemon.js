@@ -52,14 +52,25 @@ async function getAllPokemons() {
   const dBData = await getAllDB();
   const apiDB = apiData.concat(dBData);
   return apiDB;
-  //console.log(apiDB)
+  //console.log(apiDB);
 }
+// async function getAllPokemons (){
+//   try{
+//       const [pokesApi, pokesDb] = await Promise.all([getAllApi(), getAllDB()]);
+//       return [...pokesApi, ...pokesDb];
+//   }catch(e){
+//       return e
+//   }
+  
+// }
+
+
 
 //  Get pokemon por nombre (query).
 
 async function getPokemonByName(req, res) {
   const name = req.query.name;
-  
+
   const pokemonsTotal = await getAllPokemons();
   // console.log(pokemonsTotal)
   if (name) {
@@ -74,44 +85,66 @@ async function getPokemonByName(req, res) {
   }
 }
 
+// Get pokemon by id
+async function getPokemonById(req, res) {
+  const id = req.params.id;
+  const pokemonTotal = await getAllPokemons();
+  if (id) {
+    const idPokemon = pokemonTotal.filter((el) => el.id == id);
+    idPokemon.length
+      ? res.status(200).json(idPokemon)
+      : res.status(404).send("No se encontro el pokemon solicitado...");
+  }
+}
+
 // Crear un pokemon.
 async function postPokemon(req, res, next) {
-  
-    const { name, ph, strength, defense, speed, height, weight, image, createdInDb, type } =
-      req.body;
+  try {
+    const {
+      name,
+      ph,
+      strength,
+      defense,
+      speed,
+      height,
+      weight,
+      image,
+      createdInDb,
+      type,
+    } = req.body;
 
-    let pokemonCreated = await Pokemon.create ({
+    let pokemonCreated = await Pokemon.create({
       id: uuidv4(),
       name,
       ph,
       strength,
       defense,
       speed,
-      height,  
+      height,
       weight,
       image,
-      createdInDb
+      createdInDb,
     });
-     
+
     const typeBD = await Types.findAll({
       where: { name: name },
     });
     pokemonCreated.addType(typeBD);
     res.send(pokemonCreated);
-
-   }
-
+  } catch (error) {
+    next(error);
+  }
+}
 
 // 2. Get pokemon por id ( .Los campos mostrados en la ruta principal para cada pokemon (imagen, nombre y tipos)
 //                      .Número de Pokemon (id)
 //                      .Estadísticas (vida, ataque, defensa, velocidad)
 //                      .Altura y peso)
 
-
-
 // module.exports de las funciones creadas
 module.exports = {
   getAllPokemons,
   getPokemonByName,
   postPokemon,
+  getPokemonById,
 };
