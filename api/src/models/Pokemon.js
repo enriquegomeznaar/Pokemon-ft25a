@@ -38,6 +38,10 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    image:{
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     createdInDb:{
       type: DataTypes.BOOLEAN,
       defaultValue: true,
