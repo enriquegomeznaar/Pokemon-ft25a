@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Pokemon, Types } = require("../db");
-const API_URL_POKES = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10";
+const API_URL_POKES = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=12";
 const { v4: uuidv4 } = require("uuid");
 const { Router } = require("express");
 const router = Router();
@@ -51,9 +51,10 @@ async function getAllPokemons() {
   const apiData = await getAllApi();
   const dBData = await getAllDB();
   const apiDB = apiData.concat(dBData);
-  return apiDB;
   //console.log(apiDB);
+  return apiDB;
 }
+// console.log(getAllPokemons())
 // async function getAllPokemons (){
 //   try{
 //       const [pokesApi, pokesDb] = await Promise.all([getAllApi(), getAllDB()]);
