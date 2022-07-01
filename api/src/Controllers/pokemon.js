@@ -47,12 +47,16 @@ async function getAllDB() {
     },
   });
 }
-async function getAllPokemons() {
+async function getAllPokemons(req,res,next) {
+  try {
   const apiData = await getAllApi();
   const dBData = await getAllDB();
   const apiDB = apiData.concat(dBData);
-  //console.log(apiDB);
-  return apiDB;
+ //console.log(apiDB);
+  return res.send(apiDB);
+} catch (error) {
+  next(error)
+}
 }
 // console.log(getAllPokemons())
 // async function getAllPokemons (){

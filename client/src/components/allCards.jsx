@@ -14,10 +14,10 @@ export default function AllCards() {
   }, [dispatch]);
   return (
     <div>
-      {estadoPokemon.length > 0 ? (
+      {estadoPokemon ? (
         estadoPokemon.map((pk) => (
           <Link key={pk.id}to={`./detailsPokemon/${pk.id}`}>
-            <Card image={pk.image} name={pk.name} />
+            <Card image={pk.image} name={pk.name} type={pk.type}/>
           </Link>
         ))
       ) : (

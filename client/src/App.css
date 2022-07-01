@@ -1,6 +1,14 @@
 .App {
   text-align: center;
+
+  background-image: url('imgpk.png');
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /*Resize the background image to cover the entire container*/
+  background-attachment: fixed;
+  background-size: 100%;
 }
+
 
 .App-logo {
   height: 40vmin;

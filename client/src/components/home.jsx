@@ -1,9 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getPokemons } from "../actions/action";
 import { Link } from "react-router-dom";
-import Card from "./card";
 import AllCards from "./allCards";
 
 export default function Home() {
@@ -24,7 +20,7 @@ export default function Home() {
         Reload pokemons
       </button>
       <div>
-        <select>
+        {/* /* <select>
           <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
         </select>
@@ -32,7 +28,7 @@ export default function Home() {
           <option value="All">All</option>
           <option value="Created">Created in DB</option>
           <option value="Api">Exist</option>
-        </select>
+        </select> */}
         <AllCards/>
           
       </div>

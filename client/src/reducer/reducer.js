@@ -1,4 +1,4 @@
-
+import  {GET_POKEMONS}  from "../actions/action";
 const initialState = {
   pokemons: [],
   details: [],
@@ -7,7 +7,7 @@ const initialState = {
 
 export default function rootReducer(state = { initialState }, action) {
   switch (action.type) {
-    case "GET_POKEMONS":
+    case GET_POKEMONS:
       return {
         ...state,
         pokemons: action.payload,
