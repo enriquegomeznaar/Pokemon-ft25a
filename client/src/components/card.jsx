@@ -1,5 +1,17 @@
 import React from "react";
 
+// const styles = {
+//     div:{
+//         display:'flex',
+//         justifyContent:'space-between',
+//         alignItems:'center'
+
+//     },
+//     card:{
+//         fontSize: '20px',
+//         color:'white'
+//     },
+// }
 export default function Card({image, name, type}){
     return(
         <div>

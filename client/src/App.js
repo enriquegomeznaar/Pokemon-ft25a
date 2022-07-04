@@ -1,6 +1,7 @@
 import './App.css';
 import Landing from './components/landing'
 import Home from './components/home';
+import Form from './components/creationPokemon'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Switch>
       <Route exact path='/' component={Landing}/>
       <Route path='/home' component={Home}/>
+      <Route patch='creationPokemon' component={Form}/>
       </Switch>
     </div>
     </BrowserRouter>
