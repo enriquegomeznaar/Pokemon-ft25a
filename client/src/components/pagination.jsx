@@ -1,9 +1,7 @@
 import React from "react";
-import AllCards from "./allCards.jsx";
 
 const styles = {
-  pagination: {
-    
+  ul: {
     display: "flex",
     listStyleType: "none",
     justifyContent: "center",
@@ -12,16 +10,16 @@ const styles = {
     backgroundColor: "rgba(80, 80, 80, 0.473)",
   },
   li: {
-    padding: '1rem',
-    borderadius: '20%',
-    cursor:'pointer',
-},
-a: {
-    fontSize: '20px',
-    textDecoration: 'none',
-    color: 'white',
-}
-}
+    padding: "1rem",
+    borderadius: "20%",
+    cursor: "pointer",
+  },
+  a: {
+    fontSize: "20px",
+    textDecoration: "none",
+    color: "white",
+  },
+};
 export default function Pagination({
   pokemonPerPage,
   estadoPokemon,
@@ -35,12 +33,14 @@ export default function Pagination({
 
   return (
     <nav>
-      <ul style={styles.pagination}>
+      <ul style={styles.ul}>
         {pageNumber &&
           pageNumber.map((number) => (
             <li style={styles.li} key={number}>
-              <a style={styles.a} onClick={() => paginado(number)}>{number}</a>
-              {console.log(pageNumber)}
+              <a style={styles.a} onClick={() => paginado(number)}>
+                {number}
+              </a>
+              {/* {console.log(pageNumber)} */}
             </li>
           ))}
       </ul>

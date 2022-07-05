@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Pokemon, Types } = require("../db");
-const API_URL_POKES = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=12";
+const API_URL_POKES = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=40";
 const { v4: uuidv4 } = require("uuid");
 const { Router } = require("express");
 const router = Router();
