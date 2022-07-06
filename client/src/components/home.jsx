@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Card from "./card";
 import Pagination from "./pagination";
+import SearchBar from "./searchBar";
 import {
   filterByTypes,
   filterCreated,
   getPokemons,
   orderByName,
   orderByStrength,
-  getTypes
+  getTypes,
 } from "../actions/action";
 const image = require("../images/img.png");
 const styles = {
@@ -20,7 +21,18 @@ const styles = {
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundAttachment: "fixed",
-    padding: "20px",
+    padding: "5px",
+  },
+  h1: {
+    fontSize: "80px",
+    margin: "0px",
+    color: '#f02f17',
+    shadow:'',
+    position: "relative",
+    letterSpacing:'5px'
+    
+    // overflow:'hidden'
+
   },
   navbar: {
     display: "flex",
@@ -35,7 +47,7 @@ export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPokemons());
-    dispatch(getTypes())
+    dispatch(getTypes());
   }, [dispatch]);
   const [currentPage, setCurrentPage] = useState(1);
   const [orden, setOrden] = useState("");
@@ -58,7 +70,7 @@ export default function Home() {
   const handleFilterByTypes = (e) => {
     e.preventDefault();
     dispatch(filterByTypes(e.target.value));
-    setCurrentPage(1)
+    setCurrentPage(1);
   };
   const [pokemonPerPage, setPokemonPerPage] = useState(12);
   const indexOfLastPokemonPage = currentPage * pokemonPerPage;
@@ -72,13 +84,10 @@ export default function Home() {
   };
   return (
     <div style={styles.container}>
+      <h1 style={styles.h1}>Go Pokemon!</h1>
       <div style={styles.navbar}>
-        <h1>Go Pokemon!</h1>
-        <Link to="/creationPokemon">Create Pokemon</Link>
-        <div>
-          <input placeholder="serach  pokemon..."></input>
-          <button>Search</button>
-        </div>
+        <Link to='/pokemon'>Create Pokemon</Link>
+        <SearchBar/>
         <div>
           <select onChange={(e) => handleFilterAsc(e)}>
             <option value="default">Order by name</option>
@@ -90,13 +99,16 @@ export default function Home() {
             <option value="stronger">Stronger</option>
             <option value="weaker">Weaker</option>
           </select>
-          <select onChange={(e)=> handleFilterByTypes(e)}>
+          <select onChange={(e) => handleFilterByTypes(e)}>
             <option value="default">Choose type</option>
-               { pokemonTypes?.map((t, i) => {
-                  return (<option value={t.name} key={i}>{t.name[0].toUpperCase() + t.name.slice(1)}</option>)
-                })
-};
-            
+            {pokemonTypes?.map((t, i) => {
+              return (
+                <option value={t.name} key={i}>
+                  {t.name[0].toUpperCase() + t.name.slice(1)}
+                </option>
+              );
+            })}
+            ;
           </select>
           <select onChange={(e) => handleFilterCreated(e)}>
             <option value="default">All</option>

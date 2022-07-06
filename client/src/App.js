@@ -10,7 +10,7 @@ function App() {
       <Switch>
       <Route exact path='/' component={Landing}/>
       <Route path='/home' component={Home}/>
-      <Route patch='creationPokemon' component={Form}/>
+      <Route patch='/pokemon' component={Form}/>
       </Switch>
     </div>
     </BrowserRouter>

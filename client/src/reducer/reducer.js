@@ -5,6 +5,8 @@ import {
   GET_POKEMONS,
   GET_TYPES,
   FILTER_BY_TYPES,
+  GET_POKEMONS_NAME,
+  POST_POKEMON,
 } from "../actions/action";
 const initialState = {
   pokemons: [],
@@ -27,6 +29,10 @@ export default function rootReducer(state = { initialState }, action) {
         ...state,
         pokemonTypes: action.payload,
       };
+    case POST_POKEMON:
+      return {
+        ...state,
+      };
     case FILTER_BY_TYPES:
       const allPokemons = state.allPokemons;
       const filterTypes =
@@ -40,6 +46,11 @@ export default function rootReducer(state = { initialState }, action) {
       return {
         ...state,
         pokemons: filterTypes,
+      };
+    case GET_POKEMONS_NAME:
+      return {
+        ...state,
+        pokemons: action.payload,
       };
     case FILTER_NAME:
       const sortArr =
