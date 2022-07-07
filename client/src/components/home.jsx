@@ -15,7 +15,6 @@ import {
 } from "../actions/action";
 const image = require("../images/img.png");
 const styles = {
-
   h1: {
     fontSize: "80px",
     margin: "0px",
@@ -23,7 +22,7 @@ const styles = {
     shadow: "",
     position: "relative",
     letterSpacing: "5px",
-    textShadow: '5px',
+    textShadow: "5px",
   },
   navbar: {
     display: "flex",
@@ -36,17 +35,25 @@ const styles = {
     fontSize: "20px",
     border: "5px outset rgba(255,0,0,0.7)",
     borderRadius: "20px",
-    padding:'10px',
-    letterSpacing:'5px'
+    padding: "10px",
+    letterSpacing: "5px",
   },
-  contenedorSelect:{
-     
-  },
+  contenedorSelect: {},
   cards: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     gap: "50px",
   },
+  botonReload:{
+    borderRadius:'10px',
+    outline:'none',
+    padding:'3px 10px',
+    cursor:'pointer',
+
+  },
+  link2:{
+    textDecoration: 'none'
+  }
 };
 export default function Home() {
   const estadoPokemon = useSelector((state) => state.pokemons);
@@ -79,6 +86,11 @@ export default function Home() {
     dispatch(filterByTypes(e.target.value));
     setCurrentPage(1);
   };
+  const handlerReload = (e) => {
+    e.preventDefault();
+    dispatch(getPokemons());
+    setCurrentPage(1);
+  };
   const [pokemonPerPage, setPokemonPerPage] = useState(12);
   const indexOfLastPokemonPage = currentPage * pokemonPerPage;
   const indexOfFirstPokemonPage = indexOfLastPokemonPage - pokemonPerPage;
@@ -93,7 +105,7 @@ export default function Home() {
     <div>
       <h1 style={styles.h1}>Go Pokemon!</h1>
       <div style={styles.navbar}>
-        <Link style={styles.link} to="/pokemon">
+        <Link style={styles.link} to="/creation">
           Create Pokemon
         </Link>
         <SearchBar />
@@ -124,15 +136,16 @@ export default function Home() {
             <option value="api">Exist</option>
             <option value="created">Created in DB</option>
           </select>
+          <button style={styles.botonReload} onClick={(e) => handlerReload(e)}>Reload pokemons...</button>
         </div>
       </div>
       <div>
         <div style={styles.cards}>
           {currentPokemons ? (
-            currentPokemons.map((pk) => {
+            currentPokemons.map((pk, i) => {
               return (
-                <Link key={pk.id} to={`./home/${pk.id}`}>
-                  <Card image={pk.image} name={pk.name} type={pk.type} />
+                <Link key={i} to={"/home/" + pk.id} style={styles.link2}>
+                  <Card name={pk.name} image={pk.image} type={pk.type ? pk.type : "UNKNOWN"} />
                 </Link>
               );
             })
