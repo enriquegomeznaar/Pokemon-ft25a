@@ -45,7 +45,7 @@ export function getPokemonsName(name) {
   return async function (dispatch) {
     try {
       let json = await axios.get(
-        "http://localhost:3001/pokemons?search=" + name
+        `http://localhost:3001/pokemons?search=${name}`
       );
 
       dispatch({

@@ -50,7 +50,7 @@ export default function rootReducer(state = { initialState }, action) {
     case GET_POKEMONS_NAME:
       return {
         ...state,
-        pokemons: action.payload,
+        allPokemons: action.name,
       };
     case FILTER_NAME:
       const sortArr =

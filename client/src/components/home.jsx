@@ -15,30 +15,37 @@ import {
 } from "../actions/action";
 const image = require("../images/img.png");
 const styles = {
-  container: {
-    backgroundImage: `url(${image})`,
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundAttachment: "fixed",
-    padding: "5px",
-  },
+
   h1: {
     fontSize: "80px",
     margin: "0px",
-    color: '#f02f17',
-    shadow:'',
+    color: "rgba(255,0,0,0.7)",
+    shadow: "",
     position: "relative",
-    letterSpacing:'5px'
-    
-    // overflow:'hidden'
-
+    letterSpacing: "5px",
+    textShadow: '5px',
   },
   navbar: {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    color: "white",
+    padding: "10px",
+  },
+  link: {
+    color: "#CCCCCC",
+    fontSize: "20px",
+    border: "5px outset rgba(255,0,0,0.7)",
+    borderRadius: "20px",
+    padding:'10px',
+    letterSpacing:'5px'
+  },
+  contenedorSelect:{
+     
+  },
+  cards: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    gap: "50px",
   },
 };
 export default function Home() {
@@ -83,12 +90,14 @@ export default function Home() {
     setCurrentPage(pageNumber);
   };
   return (
-    <div style={styles.container}>
+    <div>
       <h1 style={styles.h1}>Go Pokemon!</h1>
       <div style={styles.navbar}>
-        <Link to='/pokemon'>Create Pokemon</Link>
-        <SearchBar/>
-        <div>
+        <Link style={styles.link} to="/pokemon">
+          Create Pokemon
+        </Link>
+        <SearchBar />
+        <div style={styles.contenedorSelect}>
           <select onChange={(e) => handleFilterAsc(e)}>
             <option value="default">Order by name</option>
             <option value="asc">Upward</option>
@@ -118,17 +127,19 @@ export default function Home() {
         </div>
       </div>
       <div>
-        {currentPokemons ? (
-          currentPokemons.map((pk) => {
-            return (
-              <Link key={pk.id} to={`./home/${pk.id}`}>
-                <Card image={pk.image} name={pk.name} type={pk.type} />
-              </Link>
-            );
-          })
-        ) : (
-          <h2>Loading...</h2>
-        )}
+        <div style={styles.cards}>
+          {currentPokemons ? (
+            currentPokemons.map((pk) => {
+              return (
+                <Link key={pk.id} to={`./home/${pk.id}`}>
+                  <Card image={pk.image} name={pk.name} type={pk.type} />
+                </Link>
+              );
+            })
+          ) : (
+            <h2>Loading...</h2>
+          )}
+        </div>
         <Pagination
           pokemonPerPage={pokemonPerPage}
           estadoPokemon={estadoPokemon?.length}
