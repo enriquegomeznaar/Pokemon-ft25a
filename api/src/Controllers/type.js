@@ -14,6 +14,7 @@ async function getAllToBD(req,res){
     } catch (error) {
         console.log(error)
     }
+    // console.log(types);
   }
 
 module.exports={

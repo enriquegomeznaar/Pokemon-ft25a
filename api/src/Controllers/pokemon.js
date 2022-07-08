@@ -37,56 +37,132 @@ async function getAllApi() {
 }
 
 async function getAllDB() {
-  return await Pokemon.findAll({
-    include: {
-      model: Types,
-      attributes: ["name"],
-      through: {
-        attributes: [],
-      },
-    },
-  });
-}
-async function getAllPokemons(req,res,next) {
   try {
-  const apiData = await getAllApi();
-  const dBData = await getAllDB();
-  const apiDB = apiData.concat(dBData);
- //console.log(apiDB);
-  return res.send(apiDB);
-} catch (error) {
-  next(error)
+    const dbPokes = await Pokemon.findAll({
+      include: {
+        model: Types,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const pokeDbInfo = dbPokes.map((p) => pokeDbTemplate(p));
+    return pokeDbInfo;
+  } catch (error) {
+    console.log(error);
+  }
 }
+async function getAllPokemons() {
+  try {
+    const apiData = await getAllApi();
+    const dBData = await getAllDB();
+    const apiDB = apiData.concat(dBData);
+    // console.log("apiDB", apiDB);
+    return apiDB;
+  } catch (error) {
+    console.log(error);
+  }
 }
-// console.log(getAllPokemons())
-// async function getAllPokemons (){
-//   try{
-//       const [pokesApi, pokesDb] = await Promise.all([getAllApi(), getAllDB()]);
-//       return [...pokesApi, ...pokesDb];
-//   }catch(e){
-//       return e
-//   }
-  
-// }
 
+const pokeApiTemplate = (poke) => {
+  return {
+    id: poke.id,
+    name: poke.name,
+    height: poke.height,
+    weight: poke.weight,
+    hp: poke.stats[0].base_stat,
+    speed: poke.stats[5].base_stat,
+    strength: poke.stats[1].base_stat,
+    defense: poke.stats[2].base_stat,
+    type: poke.types.map((t) => t.type.name),
+    image: poke.sprites.other.home.front_default,
+  };
+};
+const pokeDbTemplate = (poke) => {
+  return {
+    id: poke.id,
+    name: poke.name,
+    height: poke.height,
+    weight: poke.weight,
+    hp: poke.hp,
+    speed: poke.speed,
+    strength: poke.strength,
+    defense: poke.defense,
+    types: poke.types.map((e) => e.name),
+    image: poke.image,
+  };
+};
 
+async function getDbPokeByName(name) {
+  try {
+    let dbPokeByName = await Pokemon.findAll({
+      where: { name },
+      include: { model: Types },
+    });
+    if (dbPokeByName.length === 0) {
+      return "PDNE";
+    }
 
+    let resp = dbPokeByName.map((e) => pokeDbTemplate(e));
+    return resp;
+  } catch (e) {
+    /* console.log(e) */
+    return "PDNE";
+  }
+}
+
+async function getApiPokeByName(name) {
+  try {
+    const getApiPokeByName = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    let pokeInfo = getApiPokeByName.data
+      ? pokeApiTemplate(getApiPokeByName.data)
+      : "PDNE";
+    return pokeInfo;
+  } catch (error) {
+    console.log(error);
+    return "PDNE";
+  }
+}
 //  Get pokemon por nombre (query).
 
-async function getPokemonByName(req, res) {
-  const name = req.query.name;
-
-  const pokemonsTotal = await getAllPokemons();
-  // console.log(pokemonsTotal)
+async function getPokemonName(name) {
+  
+  //  console.log("pokemonsTotal", pokemonsTotal)
   if (name) {
-    var pokemonsName = await pokemonsTotal.filter((el) =>
-      el.name.toLowerCase().includes(name.toLowerCase())
-    );
+    let apiResult = await getApiPokeByName(name);
+    let dbResult = await getDbPokeByName(name);
+
+    if (apiResult === "PDNE" && dbResult === "PDNE") {
+      return ["PDNE"];
+    }
+    if (apiResult === "PDNE" && dbResult !== "PDNE") {
+      return dbResult;
+    }
+    if (apiResult !== "PDNE" && dbResult === "PDNE") {
+      return [apiResult];
+    }
+    if (apiResult !== "PDNE" && dbResult !== "PDNE") {
+      let chorro = [apiResult, ...dbResult];
+      return chorro;
+    }
+  }
+}
+
+async function getPokemonByName(req,res) {
+  const { name } = req.query;
+  try {
+    var pokemonsName = await getPokemonName(name)
+    // .filter((el) =>
+    //   el.name.toLowerCase().includes(name.toLowerCase())
+    // );
     pokemonsName.length
       ? res.status(200).send(pokemonsName)
-      : res.status(404).send("No se encontro el Pokemon ingresado...");
-  } else {
-    res.status(200).send(pokemonsTotal);
+      : res.status(404).send("No se encontro el pokemon ingresado...");
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -137,7 +213,7 @@ async function postPokemon(req, res, next) {
     pokemonCreated.addType(typeBD);
     res.send(pokemonCreated);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 }
 

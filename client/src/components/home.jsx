@@ -19,7 +19,6 @@ const styles = {
     fontSize: "80px",
     margin: "0px",
     color: "rgba(255,0,0,0.7)",
-    shadow: "",
     position: "relative",
     letterSpacing: "5px",
     textShadow: "5px",
@@ -53,6 +52,10 @@ const styles = {
   },
   link2:{
     textDecoration: 'none'
+  },
+  hdb:{
+    color:'yellow',
+    fontSize:'40px',
   }
 };
 export default function Home() {
@@ -141,10 +144,10 @@ export default function Home() {
       </div>
       <div>
         <div style={styles.cards}>
-          {currentPokemons ? (
+          {currentPokemons ? !estadoPokemon.length?<h1 style={styles.hdb}>No pokemons created yet...</h1>:  (
             currentPokemons.map((pk, i) => {
               return (
-                <Link key={i} to={"/home/" + pk.id} style={styles.link2}>
+                <Link key={i} to={`/pokedetail/${pk.id}`} style={styles.link2}>
                   <Card name={pk.name} image={pk.image} type={pk.type ? pk.type : "UNKNOWN"} />
                 </Link>
               );

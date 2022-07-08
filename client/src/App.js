@@ -12,7 +12,7 @@ function App() {
       <Route exact path='/' component={Landing}/>
       <Route path='/home' component={Home}/>
       <Route path='/creation' component={Form}/>
-      <Route path='/home/:id' component={Detail}/>
+      <Route path='/pokedetail/:id' component={Detail}/>
       </Switch>
     </div>
     </BrowserRouter>

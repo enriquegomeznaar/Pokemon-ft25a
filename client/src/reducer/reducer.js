@@ -14,7 +14,7 @@ const initialState = {
   pokemons: [],
   allPokemons: [],
   pokemonTypes: [],
-  details: [],
+  details:[] ,
   filters: [],
 };
 
@@ -52,17 +52,19 @@ export default function rootReducer(state = { initialState }, action) {
     case GET_POKEMONS_NAME:
       return {
         ...state,
-        allPokemons: action.payload,
+        pokemons: action.payload,
       };
     case GET_DETAIL:
+      console.log('GET_DETAIL', action.payload)
       return {
         ...state,
-        details: action.payload,
+        details: action.payload[0],
       };
     case CLEAR_DETAIL:
+      console.log('CLEAR_DETAIL', state.details)
       return {
         ...state,
-        details: [],
+        details: {},
       };
     case FILTER_NAME:
       const sortArr =
@@ -118,8 +120,9 @@ export default function rootReducer(state = { initialState }, action) {
     case FILTER_CREATED:
       const filterCreated =
         action.payload === "created"
-          ? state.allPokemons.filter((el) => el.createdInDb)
-          : state.allPokemons.filter((el) => !el.createdInDb);
+
+          ? state.allPokemons.filter((el) => typeof el.id === 'string')
+          : action.payload === 'api' ? state.allPokemons.filter((el) => typeof el.id === 'number' ) : null;
       return {
         ...state,
         pokemons:

@@ -1,17 +1,5 @@
 import React from "react";
 
-// const styles = {
-//     div:{
-//         display:'flex',
-//         justifyContent:'space-between',
-//         alignItems:'center'
-
-//     },
-//     card:{
-//         fontSize: '20px',
-//         color:'white'
-//     },
-// }
 const styles = {
   divContainer: {
     border: "5px solid grey",
@@ -27,7 +15,6 @@ const styles = {
     width:'300px',
     backgroundColor:'rgba(0, 0, 0, 0.7)',
     textDecoration:'none'
-    // opacity:'0.5',
   },
   img:{
     

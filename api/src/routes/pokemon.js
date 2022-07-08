@@ -8,7 +8,7 @@ const {
 
 const router = Router();
 
-router.get("/", getAllPokemons);
+router.get("/", async (req,res)=> {res.status(200).send(await getAllPokemons())});
 router.get("/search", getPokemonByName);
 router.get("/:id", getPokemonById)
 router.post("/", postPokemon);

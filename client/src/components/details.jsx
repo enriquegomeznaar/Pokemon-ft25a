@@ -3,42 +3,69 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail, clearDetail } from "../actions/action";
-
+import { useParams } from "react-router-dom";
+const styles = {
+  contenedor:{
+    display:'flex',
+    flexDirection:'row',
+    border: '1px solid grey'
+  },
+  h1:{
+    color:'yellow',
+    fontFamily:'roboto',
+    
+  },
+  h3:{
+    color:'yellow',
+    fontFamily:'roboto',
+    
+  },
+  h5:{
+    margin : '0',
+    padding:'10px',
+    color: 'yellow',
+    fontFamily:'roboto',
+  }
+}
 export default function Detail(props) {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getDetail(props.match.params.id));
-    return (() => {
-        dispatch(clearDetail())
-      })
-  }, [dispatch]);
   const myPokemon = useSelector((state) => state.details);
+  useEffect(() => {
+    dispatch(getDetail(id));
+    console.log("entre", myPokemon);
+    return () => {
+      dispatch(clearDetail());
+      console.log("me fui", myPokemon);
+    };
+  }, [dispatch]);
 
   return (
-    <div>
+    <div style={styles.contenedor}>
+      {console.log("mypokemon", myPokemon)}
       <Link to="/home">
         <button>Go Back</button>
       </Link>
-      {myPokemon.length > 0 ? (
+      {myPokemon ? (
         <div>
           <div>
-            <h1>Name: {myPokemon[0].name[0] + myPokemon[0].name.slice(1)}</h1>
-            <img src={myPokemon[0].image} alt="" width="400px" height="400px" />
+            <h1 style={styles.h1}>Name: {myPokemon.name /*+ myPokemon.name.slice(1)*/}</h1>
+            <img src={myPokemon.image} alt="" width="300px" height="300px" />
           </div>
-          <div style={{ fontSize: "1.3em" }}>
-            <h3>
-              Type:{" "}
-              {myPokemon[0].type
-                ? myPokemon[0].type + " "
-                : myPokemon[0].types.map((t) => t.name + " ")}{" "}
+          <div>
+            <h3  style={styles.h3}>
+              Type:
+              {myPokemon.type.map((t, i) => {
+                return <p key={i}>{t}</p>;
+              })}
             </h3>
-            <h5 style={{ marginTop: "100px" }}>HP: {myPokemon[0].hp}</h5>
-            <h5>Strength: {myPokemon[0].strength}</h5>
-            <h5>Defense: {myPokemon[0].defense}</h5>
-            <h5>Speed: {myPokemon[0].speed}</h5>
-            <h5>Height: {myPokemon[0].height}</h5>
-            <h5>Weight: {myPokemon[0].weight}</h5>
-            <h6>Id: {myPokemon[0].id}</h6>
+            <h5 style={styles.h5}>HP: {myPokemon.hp}</h5>
+            <h5 style={styles.h5}>Strength: {myPokemon.strength}</h5>
+            <h5 style={styles.h5}>Defense: {myPokemon.defense}</h5>
+            <h5 style={styles.h5}>Speed: {myPokemon.speed}</h5>
+            <h5 style={styles.h5}>Height: {myPokemon.height}</h5>
+            <h5 style={styles.h5}>Weight: {myPokemon.weight}</h5>
+            <h6 style={styles.h5}>Id: {myPokemon.id}</h6>
           </div>
         </div>
       ) : (

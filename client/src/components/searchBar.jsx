@@ -33,7 +33,7 @@ export default function SearchBar() {
   const handlerInput = (e) => {
     e.preventDefault();
     setName(e.target.value.toLowerCase());
-    console.log(name);
+    // console.log(name);
   };
   const handlerButton = (e) => {
     e.preventDefault();
