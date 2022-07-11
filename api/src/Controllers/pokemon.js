@@ -89,7 +89,7 @@ const pokeDbTemplate = (poke) => {
     speed: poke.speed,
     strength: poke.strength,
     defense: poke.defense,
-    types: poke.types.map((e) => e.name),
+    type: poke.type.map((e) => e.name),
     image: poke.image,
   };
 };
